@@ -9,6 +9,7 @@ from skimage import color
 
 import numpy as np
 
+import os
 import io
 import base64
 
@@ -90,7 +91,11 @@ class UNet(nn.Module):
 
 model = UNet(3, 22)
 
-checkpoint = torch.load("../model/model.pt", map_location="cpu")
+#Loading model
+dir = os.path.dirname(__file__)
+model_path = os.path.join(dir, "../model/model.pt")
+
+checkpoint = torch.load(model_path, map_location="cpu")
 model_state = checkpoint['model_state_dict']
 
 model.load_state_dict(model_state)
