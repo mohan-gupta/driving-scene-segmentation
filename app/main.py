@@ -14,7 +14,7 @@ def home():
     return {"Data": "Welcome Home"}
 
 @app.post("/predict")
-async def predict(inp_img: InpImage):
+def predict(inp_img: InpImage):
     if(len(inp_img.image)==0):
         return {"Error": "Image Not Found"}
 
