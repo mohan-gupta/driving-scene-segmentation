@@ -38,12 +38,13 @@ def trainer(save_best=False, load=False):
 
     best_loss = 10
 
-    for epoch in range(epoch_done, config.EPOCH+epoch_done):
+    epoch_end = config.EPOCH+epoch_done
+    for epoch in range(epoch_done, epoch_end):
         print(f"Epoch {epoch}:")
         train_loss, train_score = train(train_loader, model, optimizer, loss_fn)
         val_loss, val_score = evaluate(val_loader, model, loss_fn)
 
-        if save_best: #and val_loss<best_loss:
+        if save_best and (val_loss<best_loss or epoch==epoch_end-1):
             best_loss = val_loss
             save_model(epoch, model, optimizer, val_loss)
 

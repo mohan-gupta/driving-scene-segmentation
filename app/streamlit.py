@@ -2,14 +2,11 @@ import streamlit as st
 
 import numpy as np
 from PIL import Image
-import cv2
-import moviepy.editor as moviepy
 
 import os
 import base64
-import tempfile
 
-from predict import get_results
+from predict import get_results, predict_video
 
 def add_bg_from_local(image_file):
     with open(image_file, "rb") as image_file:
@@ -68,41 +65,5 @@ if __name__ == '__main__':
     
     else:
         if uploaded_file is not None:
-            output_frames = []
-
-            tfile = tempfile.NamedTemporaryFile(delete=False) 
-            tfile.write(uploaded_file.read())
-
-            vf = cv2.VideoCapture(tfile.name)
-
-            while vf.isOpened():
-                ret, frame = vf.read()  # if frame is read correctly ret is True
-                if not ret:
-                    print("Can't receive frame (stream end?). Exiting ...")
-                    break
-                
-                pred = get_results(frame)
-
-                masked_image = cv2.cvtColor(pred, cv2.COLOR_RGB2BGR)
-
-                output_frames.append(masked_image)
-
-            output_file = tempfile.NamedTemporaryFile(suffix='.avi', delete=False, dir=dir_path)
-
-            height, width, _ = output_frames[0].shape
-
-            fourcc = cv2.VideoWriter_fourcc(*'DIVX')
-            video = cv2.VideoWriter(output_file.name, fourcc, 1, (width, height))
-
-            for frame in output_frames:
-                video.write(frame)
-
-            video.release()
-
-            clip = moviepy.VideoFileClip(output_file.name)
-            mp4_file = output_file.name[:-3]+"mp4"
-            print(mp4_file)
-
-            clip.write_videofile(mp4_file)
-
+            mp4_file = predict_video(uploaded_file)
             st.video(mp4_file)
