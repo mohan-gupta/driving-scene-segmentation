@@ -26,7 +26,7 @@ def add_bg_from_local(image_file):
 contnt = '<p style="font-family:sans-serif; color:White;"> Self-driving cars also known as Autonomous driving '\
         "cars are key innovation which has revolutionized the automobile industry. Autonomous driving is a "\
         "complex task which requires precise understanding of the environment. In order to get precise pixel wise "\
-        "information of the driving scenes, semantic segmentation is used. To perform semantic segmentation we "\
+        "information of the driving scenes, semantic segmentation is used. To perform semantic segmentation I "\
         "have used U-Net model with slight modifications.</p>"\
         '<p style="font-family:sans-serif; color:White;"> We have trained U-Net model on Indian Driving '\
         "Dataset(IDD) with Dice Score = 80.04%</p>"
